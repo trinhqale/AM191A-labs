@@ -1,31 +1,109 @@
-<link rel="stylesheet" href="styles/style.css">
-
 <!DOCTYPE html>
+
 <html>
 
 <head>
+    <link rel="stylesheet" href="styles/style.css">
     <title>Hello World with Leaflet</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="#">
-
-    <!-- I'd add some style if here if I had any -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 </head>
+
 
 <body>
     <header>
-        Hello World! Testing
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <ul>
+            <li><a href="https://trinhqale.github.io/AM191A-labs/week1/index.html">Homepage</a></li>
+            <li> <a href="https://github.com/trinhqale">Github</a></li>
+
+            <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">My real picture if you're curious</a></li>
+
+        </ul>
+        <h1>Trinh Le's Portfolio</h1>
     </header>
-
     <div class="main">
-        <!-- hint: majority of your lab assignment can go here     -->
+
+        <h2>Spring 2023 | ASIA AM 191A - Topics in Research Methodologies: Web Development and GIS for Social Change: Critical Data for Transforming Civil Society</h2>
+        <img class="profile-picture" src="./media/pfp_yas.jpg" alt="My profile pic">
+        <h3>My Interests</h3>
+        <ul>
+            <li>Sleep and play games that I hate</li>
+            <li>Explore different fields in Computer Science</li>
+            <li>Embedded Systems (just started)</li>
+        </ul>
+        </ol>
+        <h3>Bio</h3>
+        <p>
+            Born and raised in Hanoi, Vietnam. I moved to the US with my family with zero idea of what to do with my life. I chose CS(E) as my major because I enjoy coding (not really) and I can use it as an excuse to use computer longer without annoying my parents.
+            <br> My most hated game is League of Legends and it's the only game I'm playing for now (only Aram though). My favorite champion in the game is Yasuo but I feed like 90% of the time, hence my profile picture.
+            <br> I'm taking this class because I don't want to take another CS class and I also want to explore how CS can make impact to the community. I'm graduating this quarter and hopefully I can use what I learn in this class to make meaningful
+            contributions to the community.
+            <br> Below you can see where I live (Orange County), our school (UCLA), and my hometown in Vietnam. It took a bit of time to fix the bugs but hey the extra credit is worth it, right? RIGHT???.
+        </p>
+
+    </div>
+    <div id='the_map' style="width: 750px; height: 500px; center: true">
+
+        <!-- I'd add some style if here if I had any -->
+        <!-- <link rel="stylesheet" href="styles/style.css"> -->
+        <script>
+            const map = L.map('the_map').setView([34.0709, -118.444], 15); // (1)!
+            // var map = L.map('map').setView([51.505, -0.09], 13);
+            // Leaflet tile layer, i.e. the base map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map); // (2)!
+
+            // //JavaScript let variable declaration to create a marker
+
+            let marker1 = L.marker([21.0278, 105.8342]).addTo(map) // (3)!
+                .bindPopup('This is the place I used to live')
+                .openPopup();
+
+            let marker2 = L.marker([34.0689, -118.4452]).addTo(map) // (3)!
+                .bindPopup('This is UCLA')
+                .openPopup();
+
+            let marker3 = L.marker([33.7090, -117.9544]).addTo(map) // (3)!
+                .bindPopup('This is where I live')
+                .openPopup();
+            var group = new L.featureGroup([marker1, marker2, marker3])
+            map.fitBounds(group.getBounds());
+            var latlngs = Array();
+
+            //Get latlng from first marker
+            latlngs.push(marker1.getLatLng());
+
+            //Get latlng from first marker
+            latlngs.push(marker2.getLatLng());
+            //From documentation http://leafletjs.com/reference.html#polyline
+            // create a red polyline from an arrays of LatLng points
+            var polyline = L.polyline(latlngs, {
+                color: 'red',
+                dashArray: '10,10'
+            }).addTo(map);
+            polyline.bindTooltip("Distance is 7665 miles (12335 km)").openTooltip();
+
+            // zoom the map to the polyline
+            map.fitBounds(polyline.getBounds());
+            // var map = L.map('map').setView([51.505, -0.09], 13);
+            // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            //     maxZoom: 19,
+            //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            // }).addTo(map);
+        </script>
 
     </div>
 
 
-    <div id="footer">
-        Copyright(2023)
-    </div>
 
 </body>
 
