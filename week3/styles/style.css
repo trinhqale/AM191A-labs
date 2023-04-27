@@ -30,3 +30,21 @@ header {
     height: 80vh;
     grid-area: main_map;
 }
+
+.leaflet-control-button {
+    background-image: linear-gradient(to bottom, #f6f6f6, #e6e6e6);
+    color: #444;
+    font-size: 14px;
+    padding: 10px ;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    outline: none;
+  }
+  
+  .leaflet-control-button:hover {
+    background-image: linear-gradient(to bottom, #e6e6e6, #d6d6d6);
+    border-color: #999;
+    cursor: pointer;
+  }
+  
