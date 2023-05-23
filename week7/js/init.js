@@ -44,29 +44,32 @@ function addMarker(data) {
         // return location
     let story = data['Share your anime experience. Could be anything about your favorite anime or your favorite genre.'] || "None"
     let hours = data['How many hours a week do you spend watching anime?'] || 0
+    let content
     if (data['Do you like Anime/Manga?'] == "Yes") {
+        content = `<h2>Location: ${location}</h2>
+        <h2>Do Watch Anime</h2>
+        <h3>${hours} Hours/week <h3>
+        <h3>Description: ${story} </h3>`
         circleOptions.fillColor = "red"
         anime.addLayer(L.circleMarker([data.lat, data.lng], circleOptions)
-            .bindPopup(`<h2>Location: ${location}</h2>
-                        <h2>Do Watch Anime</h2>
-                        <h3>${hours} Hours/week <h3>
-                        <h3>Description: ${story} </h3>`))
-        createButtons(data.lat, data.lng, location)
+            .bindPopup(content))
+        createButtons(data.lat, data.lng, location, content)
     } else {
+        content = `<h2>Location: ${location}</h2>
+        <h2>Do not watch Anime</h2>
+        <h3>${hours} Hours/week <h3>
+        <h3>Description: ${story} </h3>`
         circleOptions.fillColor = "blue"
         noAnime.addLayer(L.circleMarker([data.lat, data.lng], circleOptions)
-            .bindPopup(`<h2>Location: ${location}</h2>
-                          <h2>Do not watch Anime</h2>
-                          <h3>${hours} Hours/week <h3>
-                          <h3>Description: ${story} </h3>`))
+            .bindPopup(content))
 
-        createButtons(data.lat, data.lng, location)
+        createButtons(data.lat, data.lng, location, content)
     }
     return location
 
 }
 
-function createButtons(lat, lng, title) {
+function createButtons(lat, lng, title, content) {
     const newButton = document.createElement("button"); // adds a new button
     newButton.id = "button" + title; // gives the button a unique id
     newButton.innerHTML = title; // gives the button a title
@@ -74,6 +77,11 @@ function createButtons(lat, lng, title) {
     newButton.setAttribute("lng", lng); // sets the longitude 
     newButton.addEventListener('click', function() {
         map.flyTo([lat, lng]); //this is the flyTo from Leaflet
+        const popup = L.popup() // creates a popup instance
+            .setLatLng([lat, lng]) // sets the popup location
+            .setContent(content) // sets the popup content
+            .openOn(map); // opens the popup on the map
+        window.scrollTo({ top: 80, behavior: "smooth" });
     })
     const spaceForButtons = document.getElementById('placeForButtons')
     spaceForButtons.appendChild(newButton); //this adds the button to our page.

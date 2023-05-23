@@ -11,12 +11,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // create a function to add markers
 function addMarker(data) {
     let location = data['What\'s your location']
-    L.marker([data.lat, data.lng]).addTo(map).bindPopup(`<h2>${location}</h2> <h3>${(data['Do you like Anime/Manga?'] == "Yes") ? "Watch Anime" : "Do not watch Anime"}</h3>`)
-    createButtons(data.lat, data.lng, location)
+    let content = `<h2>${location}</h2> <h3>${(data['Do you like Anime/Manga?'] == "Yes") ? "Watch Anime" : "Do not watch Anime"}</h3>`
+    L.marker([data.lat, data.lng]).addTo(map).bindPopup(content)
+    createButtons(data.lat, data.lng, location, content)
     return location
 }
 
-function createButtons(lat, lng, title) {
+function createButtons(lat, lng, title, content) {
     const newButton = document.createElement("button"); // adds a new button
     newButton.id = "button" + title; // gives the button a unique id
     newButton.innerHTML = title; // gives the button a title
@@ -24,6 +25,11 @@ function createButtons(lat, lng, title) {
     newButton.setAttribute("lng", lng); // sets the longitude 
     newButton.addEventListener('click', function() {
         map.flyTo([lat, lng]); //this is the flyTo from Leaflet
+        const popup = L.popup() // creates a popup instance
+            .setLatLng([lat, lng]) // sets the popup location
+            .setContent(content) // sets the popup content
+            .openOn(map); // opens the popup on the map
+        window.scrollTo({ top: 80, behavior: "smooth" });
     })
     const spaceForButtons = document.getElementById('placeForButtons')
     spaceForButtons.appendChild(newButton); //this adds the button to our page.
