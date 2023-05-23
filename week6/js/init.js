@@ -33,6 +33,7 @@ function createButtons(lat, lng, title) {
 
 const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9F9sPBHAGC7mf9_UH-tc0LJd-4oaiDn1cm7baZQ81tfrNqq9yHDFpLT5UQ1S3y6d73mA2eV9zx2fc/pub?output=csv"
 
+
 function loadData(url) {
     Papa.parse(url, {
         header: true,
